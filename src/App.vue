@@ -5,7 +5,7 @@
     </div>
 
     <div id="div2ID">
-      <button id="ButtonID"> Recognized </button>
+      <button id="ButtonID" > Recognized </button>
       <p id="ScannDataID" style="padding-left: 30px"> Information: {{ ScannData }}</p>
     </div>
 
@@ -29,6 +29,8 @@ export default {
       PrintObjekt: {
         Name: "empty", Qualität: "empty", Größe: "empty", src: "empty"
       },
+
+
       Datenbank: { 
         4059549000152: {
           name: "Atla", Qualität: "für alle Tafeln geeignet", Größe: "72 Stück", BildURL: "https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/61MypS1KawL._AC_SS450_.jpg"
@@ -58,25 +60,25 @@ export default {
 
   SaveObject(produktnummer) {
     this.PrintObjekt.name = this.Datenbank[produktnummer].name; // Name von Datenbank lokal speichern
-    this.PrintObjekt.src =  this.Datenbank[produktnummer].src; // IMG SRC von Datenbank lokal speichern
+    this.PrintObjekt.src =  this.Datenbank[produktnummer].BildURL; // IMG SRC von Datenbank lokal speichern
     document.getElementById("ButtonID").style.background='#008000';
     console.log(this.PrintObjekt);
     this.visible=true;
-    return
   }
 }
 </script>
 
 <style >
 #readerID {
-  background-color: brown;
+  background: brown;
 }
 #ProductPictureID {
   width: 150px;
   height: 150px;
 }
-#ButtonId{
+#ButtonID{
   text-align: left;
+  color: rgb(0, 0, 0);
 }
 #ProduktFensterID {
   display: flex;
