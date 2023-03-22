@@ -26,7 +26,6 @@ export default {
     return {
       ScannData: "text",
       visible: false,
-
       Datenbank: { 
         4059549000152: {
           name: "Atla", Qualität: "für alle Tafeln geeignet", Größe: "72 Stück", BildURL: "https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/61MypS1KawL._AC_SS450_.jpg"
@@ -45,11 +44,6 @@ export default {
         this.visible=true;
         document.getElementById("ButtonID").style.background='#008000';
       }  
-
-      if(result == "50000112630299"){
-        this.visible=true;
-        document.getElementById("ButtonID").style.background='#008000';
-      }
     }
   } 
 }
