@@ -45,6 +45,7 @@ export default {
    methods: {
      onDecode (result) { 
       this.ScannData = result;
+
       if(result == "4059549000152"){
         this.SaveObject(4059549000152);
       }  
@@ -56,9 +57,10 @@ export default {
   },
 
   SaveObject(produktnummer) {
-    this.PrintObjekt.name = Datenbank[produktnummer].name;
+    this.PrintObjekt.name = this.Datenbank[produktnummer].name; // Name von Datenbank lokal speichern
+    this.PrintObjekt.src =  this.Datenbank[produktnummer].src; // IMG SRC von Datenbank lokal speichern
     document.getElementById("ButtonID").style.background='#008000';
-    console.log(this.PrintObjekt.name);
+    console.log(this.PrintObjekt);
     this.visible=true;
     return
   }
