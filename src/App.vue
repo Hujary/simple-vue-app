@@ -50,16 +50,16 @@ export default {
       this.visible=true;
 
       if(result == "4059549000152"){
-        this.SaveObject(4059549000152);
+        this.saveObject(4059549000152);
       }  
 
       if(result == "50000112630299"){
-        this.SaveObject(50000112630299);
+        this.saveObject(50000112630299);
       }
     }
   },
 
-  SaveObject(produktnummer) {
+  saveObject(produktnummer) {
     this.PrintObjekt.name = this.Datenbank[produktnummer].name; // Name von Datenbank lokal speichern
     this.PrintObjekt.src =  this.Datenbank[produktnummer].BildURL; // IMG SRC von Datenbank lokal speichern
     document.getElementById("ButtonID").style.background='#008000';
