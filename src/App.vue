@@ -78,7 +78,8 @@ export default {
 }
 #ProduktFensterID {
   display: flex;
-  flex-direction: row
+  flex-direction: row;
+  padding-top: 20px;
 }
 #div2ID {
   display: flex;
