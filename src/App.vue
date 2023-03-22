@@ -27,7 +27,7 @@ export default {
       ScannData: "text",
       visible: false,
       PrintObjekt: {
-        Name: "empty", Qualität: "empty", Größe: "empty", src: "empty"
+        Name: "empty", Qualität: "empty", Größe: "empty", src: "https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/61MypS1KawL._AC_SS450_.jpg"
       },
 
 
@@ -47,6 +47,7 @@ export default {
    methods: {
      onDecode (result) { 
       this.ScannData = result;
+      this.visible=true;
 
       if(result == "4059549000152"){
         this.SaveObject(4059549000152);
