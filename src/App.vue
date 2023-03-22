@@ -11,10 +11,10 @@
 
     <div id="ProduktFensterID" v-if="visible==true"> 
       <div > 
-        <img id="ProductPictureID" :src="PrintObjekt.src" /> 
+        <img id="ProductPictureID" src="https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/61MypS1KawL._AC_SS450_.jpg" /> 
       </div>
       <div> 
-        {{ PrintObjekt.name }}
+        {{ Datenbank[4059549000152].name }}
       </div>
     </div>
 </template>
@@ -26,17 +26,10 @@ export default {
     return {
       ScannData: "text",
       visible: false,
-      PrintObjekt: {
-        Name: "empty", Qualität: "empty", Größe: "empty", src: "https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/61MypS1KawL._AC_SS450_.jpg"
-      },
-
 
       Datenbank: { 
         4059549000152: {
           name: "Atla", Qualität: "für alle Tafeln geeignet", Größe: "72 Stück", BildURL: "https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/61MypS1KawL._AC_SS450_.jpg"
-       },
-       50000112630299: {
-          name: "Fuze", Größe: "1L", BildURL: "https://www.worldofsweets.de/out/pictures/master/product/1/fuzetea-schwarzer-tee-pfirsich-400ml-no1-4837.jpg"
        }
       }
     }
@@ -47,25 +40,18 @@ export default {
    methods: {
      onDecode (result) { 
       this.ScannData = result;
-      this.visible=true;
 
       if(result == "4059549000152"){
-        this.saveObject(4059549000152);
+        this.visible=true;
+        document.getElementById("ButtonID").style.background='#008000';
       }  
 
       if(result == "50000112630299"){
-        this.saveObject(50000112630299);
+        this.visible=true;
+        document.getElementById("ButtonID").style.background='#008000';
       }
     }
-  },
-
-  saveObject(produktnummer) {
-    this.PrintObjekt.name = this.Datenbank[produktnummer].name; // Name von Datenbank lokal speichern
-    this.PrintObjekt.src =  this.Datenbank[produktnummer].BildURL; // IMG SRC von Datenbank lokal speichern
-    document.getElementById("ButtonID").style.background='#008000';
-    console.log(this.PrintObjekt);
-    this.visible=true;
-  }
+  } 
 }
 </script>
 
