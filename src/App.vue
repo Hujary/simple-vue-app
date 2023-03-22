@@ -47,15 +47,16 @@ export default {
       this.ScannData = result;
 
       if(result == "4059549000152"){
-        console.log(this.Datenbank[4059549000152]);
         this.visible=true;
-        document.getElementById("ButtonID").style.background='#008000';;
+        document.getElementById("ButtonID").style.background='#008000';
+        this.PrintObjekt.name = Datenbank[4059549000152].name;
+
       }  
 
       if(result == "50000112630299"){
-        console.log(this.Datenbank[50000112630299]);
         this.visible=true;
-        document.getElementById("ButtonID").style.background='#008000';;
+        document.getElementById("ButtonID").style.background='#008000';
+        this.PrintObjekt.name = Datenbank[50000112630299].name;
       }
 
     }
