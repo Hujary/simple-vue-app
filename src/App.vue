@@ -45,21 +45,21 @@ export default {
    methods: {
      onDecode (result) { 
       this.ScannData = result;
-
       if(result == "4059549000152"){
-        this.visible=true;
-        document.getElementById("ButtonID").style.background='#008000';
-        this.PrintObjekt.name = Datenbank[4059549000152].name;
-
+        SaveObject(4059549000152);
       }  
 
       if(result == "50000112630299"){
-        this.visible=true;
-        document.getElementById("ButtonID").style.background='#008000';
-        this.PrintObjekt.name = Datenbank[50000112630299].name;
+        SaveObject(50000112630299);
       }
-
     }
+  },
+  
+  SaveObject(produktnummer) {
+    this.PrintObjekt.name = Datenbank[produktnummer].name;
+    document.getElementById("ButtonID").style.background='#008000';
+    this.visible=true;
+    return
   }
 }
 </script>
