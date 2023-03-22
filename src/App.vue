@@ -46,18 +46,19 @@ export default {
      onDecode (result) { 
       this.ScannData = result;
       if(result == "4059549000152"){
-        SaveObject(4059549000152);
+        this.SaveObject(4059549000152);
       }  
 
       if(result == "50000112630299"){
-        SaveObject(50000112630299);
+        this.SaveObject(50000112630299);
       }
     }
   },
-  
+
   SaveObject(produktnummer) {
     this.PrintObjekt.name = Datenbank[produktnummer].name;
     document.getElementById("ButtonID").style.background='#008000';
+    console.log(this.PrintObjekt.name);
     this.visible=true;
     return
   }
@@ -73,13 +74,9 @@ export default {
   height: 150px;
 }
 #ButtonId{
-  background-color: white;
-  color: black;
-  border: 2px solid #4CAF50; /* Green */
   text-align: left;
 }
 #ProduktFensterID {
-  background-color: blue;
   display: flex;
   flex-direction: row
 }
