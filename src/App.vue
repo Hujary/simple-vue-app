@@ -11,11 +11,10 @@
 
     <div id="ProduktFensterID" v-if="visible==true"> 
       <div > 
-        <img id="ProductPictureID" src='https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/61MypS1KawL._AC_SS450_.jpg' /> 
+        <img id="ProductPictureID" :src="PrintObjekt.src" /> 
       </div>
       <div> 
-        {{ Datenbank[4059549000152].name }}
-        {{ Datenbank[4059549000152].Qualität }}
+        {{ PrintObjekt.name }}
       </div>
     </div>
 </template>
@@ -27,9 +26,15 @@ export default {
     return {
       ScannData: "text",
       visible: false,
+      PrintObjekt: {
+        Name: "empty", Qualität: "empty", Größe: "empty", src: "empty"
+      },
       Datenbank: { 
         4059549000152: {
-          name: "Atla", Qualität: "für alle Tafeln geeignet", BildURL: "https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/61MypS1KawL._AC_SS450_.jpg"
+          name: "Atla", Qualität: "für alle Tafeln geeignet", Größe: "72 Stück", BildURL: "https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/61MypS1KawL._AC_SS450_.jpg"
+       },
+       50000112630299: {
+          name: "Fuze", Größe: "1L", BildURL: "https://www.worldofsweets.de/out/pictures/master/product/1/fuzetea-schwarzer-tee-pfirsich-400ml-no1-4837.jpg"
        }
       }
     }
@@ -40,11 +45,19 @@ export default {
    methods: {
      onDecode (result) { 
       this.ScannData = result;
+
       if(result == "4059549000152"){
         console.log(this.Datenbank[4059549000152]);
         this.visible=true;
         document.getElementById("ButtonID").style.background='#008000';;
       }  
+
+      if(result == "50000112630299"){
+        console.log(this.Datenbank[50000112630299]);
+        this.visible=true;
+        document.getElementById("ButtonID").style.background='#008000';;
+      }
+
     }
   }
 }
@@ -59,7 +72,9 @@ export default {
   height: 150px;
 }
 #ButtonId{
-  color:green;
+  background-color: white;
+  color: black;
+  border: 2px solid #4CAF50; /* Green */
   text-align: left;
 }
 #ProduktFensterID {
@@ -71,5 +86,4 @@ export default {
   display: flex;
   flex-direction: row
 }
-
 </style>
