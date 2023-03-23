@@ -5,14 +5,14 @@
     </div>
     <div id="div2ID">
       <button id="ButtonID" disabled="disabled"> Recognized </button>
-      <p id="ScannDataID" style="padding-left: 30px"> Information: {{ this.scannDataNumber }}</p>
+      <p id="ScannDataID" style="padding-left: 30px"> EAN: {{ this.scannDataNumber }}</p>
     </div>
-    <div id="ProduktFensterID" v-if="visible==true"> 
+    <div id="ProduktFensterID" v-if="visible"> 
       <div > 
         <img id="ProductPictureID" :src=localDataObject.src />  <!-- Funktioniert nicht !!?-->
       </div>
       <div> 
-        <ul>
+        <ul style="padding-top: 35px">
           <li> {{ this.localDataObject.name }} </li> 
           <li> {{ this.localDataObject.preis + " €"}} </li> 
           <li> {{ this.localDataObject.größe + " Liter"}} </li>
@@ -29,7 +29,7 @@ export default {
       scannDataNumber: "ean",
       visible: false,
 
-      //lokales Datenobjekt für Produktausgabe  ->  bei Start "leer"
+        //  lokales Datenobjekt für Produktausgabe  ->  bei Start "leer"
       localDataObject: {
         name: null,
         preis: null, 
@@ -52,6 +52,12 @@ export default {
 	        "name": "Fuze Tee",
 	        "preis": 1.19,
           "größe": 1,
+	        "pictureLink": "https://www.worldofsweets.de/out/pictures/master/product/1/fuzetea-schwarzer-tee-pfirsich-400ml-no1-4837.jpg"
+	      },
+        { "ean": 1231231231232,
+	        "name": "test",
+	        "preis": 1.19,
+          "größe": 2,
 	        "pictureLink": "https://www.worldofsweets.de/out/pictures/master/product/1/fuzetea-schwarzer-tee-pfirsich-400ml-no1-4837.jpg"
 	      }
       ],
@@ -79,7 +85,7 @@ export default {
           this.visible=true;
         } else {
           document.getElementById("ButtonID").style.background='#f82c00';   // Button wird rot bei keinem match
-          //this.visible=false;
+          this.visible=false;
         } 
       } 
     }
