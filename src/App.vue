@@ -74,7 +74,7 @@ export default {
     onDecode (result) { 
       this.scannDataNumber = result; 
       
-      for(let i=0; i<2; i++){                                               //   Anzahl-Elemente im Array
+      for(let i=0; i<3; i++){                                               //   Anzahl-Elemente im Array
         if(result == this.datenbank[i].ean){                                //   prüft ob EAN in "Datenbank" liegt
           console.log("match mit:" + this.datenbank[i].ean);
           document.getElementById("ButtonID").style.background='#008000';   //   Button wird grün bei match
