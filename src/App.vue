@@ -5,16 +5,20 @@
     </div>
 
     <div id="div2ID">
-      <button id="ButtonID" > Recognized </button>
-      <p id="ScannDataID" style="padding-left: 30px"> Information: {{ ScannData }}</p>
+      <button id="ButtonID" disabled="disabled"> Recognized </button>
+      <p id="ScannDataID" style="padding-left: 30px"> Information: {{ scannDataNumber }}</p>
     </div>
 
     <div id="ProduktFensterID" v-if="visible==true"> 
       <div > 
-        <img id="ProductPictureID" :src="Datenbank[this.ScannData].src" /> 
+        <img id="ProductPictureID" :src="Datenbank[this.scannDataNumber].src" /> <!-- Produktfoto -->
       </div>
       <div> 
-        {{ Datenbank[123456789012].name }}
+        <ul>
+          <li> {{ localDataObject.name }} </li> 
+          <li> {{ localDataObject.Preis }} </li> 
+          <li> {{ localDataObject.Größe }} </li>
+        </ul>
       </div>
     </div>
 </template>
@@ -24,47 +28,77 @@ import { StreamBarcodeReader } from "vue-barcode-reader";
 export default {
   data() {
     return {
-      ScannData: "text",
+      scannDataNumber: "text",
       visible: false,
+
+      //lokales Datenobjekt für Produktausgabe
+      localDataObject: {
+        name: null,
+        preis: null,
+        pfand: null,
+        größe: null, 
+        src: null,
+      },
+
+//------------------------------------------------------------------------------------------------------------------------------------
+
+       //lokale Datenbank  --> hier wäre eigentlich eine API/Datenbank im einsatz 
       Datenbank: { 
         4059549000152: {
-          name: "Atla",
-          Qualität: "für alle Tafeln geeignet",
-          Größe: "72 Stück", 
-          src: "https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/61MypS1KawL._AC_SS450_.jpg"
+        name: "Atla",
+        preis: 2.99,
+        PfandStatus: false,
+        größe: 72, //in Stückzahl
+        src: "https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/61MypS1KawL._AC_SS450_.jpg"
         },
         123456789012: {
-          name: "Test", 
-          Qualität: "Gut",
-          Größe: "Leer", 
-          src: "https://www.hellabrunn.de/fileadmin/_processed_/c/f/csm_tierpark-hellabrunn-wasserschwein-capybara-amerika-tierlexikon-artenschutz_7c6c6695e6.png"
+          name: "Cola Light", 
+          Preis: 1.19,
+          Pfand: 0.25,
+          PfandStatus: true,
+          Größe: 1, //in Liter
+          src: "https://rexroth-liefert.de/media/9b/17/be/1638257642/6527397_SHOP_CCL_1L_PET_FR_GER_D_CON_EAN5449000017895_R1.png"
+        },
+        1234567890128: {
+          name: "Fuze Tee", 
+          preis: 1.29,
+          pfand: 0.25,
+          PfandStatus: true,
+          Größe: 1, //in Liter
+          src: "https://www.worldofsweets.de/out/pictures/master/product/1/fuzetea-schwarzer-tee-pfirsich-400ml-no1-4837.jpg"
         }
       }
+
+//------------------------------------------------------------------------------------------------------------------------------------
+
     }
   },
   components: {
     StreamBarcodeReader
   },
    methods: {
+      //On Decode -> sobald ein Code erkannt wurde    (result = Nummer)
     onDecode (result) { 
-    this.ScannData = result; 
+    this.scannDataNumber = result; 
 
-      if(result == "4059549000152"){
+      if(result == "4059549000152"){ //Kreide 
         console.log("Scan war erfolgreich: " + result);
         this.visible=true;
-        document.getElementById("ButtonID").style.background='#008000';
+        document.getElementById("ButtonID").style.background='#008000'; // Buttonfarbe auf grün
       }  
 
-      if(result == "123456789012"){
+      if(result == "123456789012"){ //Cola Light
+        console.log("Scan war erfolgreich: " + result);
+        console.log(Datenbank[this.scannDataNumber].src);
+        this.visible=true;
+        document.getElementById("ButtonID").style.background='#008000'; // Buttonfarbe auf grün
+      } 
+     
+      if(result == "1234567890128"){ //Fuze Tee
         console.log("Scan war erfolgreich: " + result);
         this.visible=true;
-        document.getElementById("ButtonID").style.background='#008000';
-      } 
-
-    /*for(let i=0; i<Datenbank.length(); i++){
-      console.log("funktioniert");
-    } */
-    
+        document.getElementById("ButtonID").style.background='#008000'; // Buttonfarbe auf grün
+      }
     }
   } 
 }
