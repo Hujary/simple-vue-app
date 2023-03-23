@@ -6,7 +6,7 @@
 
     <div id="div2ID">
       <button id="ButtonID" disabled="disabled"> Recognized </button>
-      <p id="ScannDataID" style="padding-left: 30px"> Information: {{ scannDataNumber }}</p>
+      <p id="ScannDataID" style="padding-left: 30px"> Information: {{ this.scannDataNumber }}</p>
     </div>
 
     <div id="ProduktFensterID" v-if="visible==true"> 
@@ -15,9 +15,9 @@
       </div>
       <div> 
         <ul>
-          <li> {{ localDataObject.name }} </li> 
-          <li> {{ localDataObject.Preis }} </li> 
-          <li> {{ localDataObject.Größe }} </li>
+          <li> {{ this.localDataObject.name }} </li> 
+          <li> {{ this.localDataObject.Preis }} </li> 
+          <li> {{ this.localDataObject.Größe }} </li>
         </ul>
       </div>
     </div>
@@ -35,8 +35,8 @@ export default {
       localDataObject: {
         name: null,
         preis: null,
-        pfand: null,
-        größe: null, 
+        pfand: null,  
+        größe: null,    
         src: null,
       },
 
@@ -85,27 +85,27 @@ export default {
         console.log("Scan war erfolgreich: " + result);
         this.visible=true;
         document.getElementById("ButtonID").style.background='#008000'; 
-        this.localDataObject.name  = Datenbank[4059549000152].name;
-        this.localDataObject.preis = Datenbank[4059549000152].preis;
-        this.localDataObject.größe = Datenbank[4059549000152].größe;
+        this.localDataObject.name  = this.Datenbank[4059549000152].name;
+        this.localDataObject.preis = this.Datenbank[4059549000152].preis;
+        this.localDataObject.größe = this.Datenbank[4059549000152].größe;
       }  
 
       if(result == "123456789012"){ //Cola Light
         console.log("Scan war erfolgreich: " + result);
         this.visible=true;
         document.getElementById("ButtonID").style.background='#008000'; 
-        this.localDataObject.name  = Datenbank[123456789012].name;
-        this.localDataObject.preis = Datenbank[123456789012].preis;
-        this.localDataObject.größe = Datenbank[123456789012].größe;
+        this.localDataObject.name  = this.Datenbank[123456789012].name;
+        this.localDataObject.preis = this.Datenbank[123456789012].preis;
+        this.localDataObject.größe = this.Datenbank[123456789012].größe;
       } 
      
       if(result == "7085840170697"){ //Fuze Tee
         console.log("Scan war erfolgreich: " + result);
         this.visible=true;
         document.getElementById("ButtonID").style.background='#008000'; 
-        this.localDataObject.name  = Datenbank[7085840170697].name;
-        this.localDataObject.preis = Datenbank[7085840170697].preis;
-        this.localDataObject.größe = Datenbank[7085840170697].größe;
+        this.localDataObject.name  = this.Datenbank[7085840170697].name;
+        this.localDataObject.preis = this.Datenbank[7085840170697].preis;
+        this.localDataObject.größe = this.Datenbank[7085840170697].größe;
       }
     }
   } 
@@ -113,24 +113,24 @@ export default {
 </script>
 
 <style >
-#readerID {
-  background: brown;
-}
-#ProductPictureID {
-  width: 150px;
-  height: 150px;
-}
-#ButtonID{
-  text-align: left;
-  color: rgb(0, 0, 0);
-}
-#ProduktFensterID {
-  display: flex;
-  flex-direction: row;
-  padding-top: 20px;
-}
-#div2ID {
-  display: flex;
-  flex-direction: row
-}
+  #readerID {
+    background: brown;
+  }
+  #ProductPictureID {
+    width: 150px;
+    height: 150px;
+  }
+  #ButtonID{
+    text-align: left;
+    color: rgb(0, 0, 0);
+  }
+  #ProduktFensterID {
+    display: flex;
+    flex-direction: row;
+    padding-top: 20px;
+  }
+  #div2ID {
+    display: flex;
+    flex-direction: row
+  }
 </style>
