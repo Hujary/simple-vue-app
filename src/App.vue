@@ -48,7 +48,7 @@ export default {
         name: "Atla",
         preis: 2.99,
         PfandStatus: false,
-        größe: 72, //in Stückzahl
+        größe: 72, 
         src: "https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/61MypS1KawL._AC_SS450_.jpg"
         },
         123456789012: {
@@ -56,15 +56,15 @@ export default {
           Preis: 1.19,
           Pfand: 0.25,
           PfandStatus: true,
-          Größe: 1, //in Liter
+          Größe: 1, 
           src: "https://rexroth-liefert.de/media/9b/17/be/1638257642/6527397_SHOP_CCL_1L_PET_FR_GER_D_CON_EAN5449000017895_R1.png"
         },
-        1234567890128: {
+        7085840170697: {
           name: "Fuze Tee", 
           preis: 1.29,
           pfand: 0.25,
           PfandStatus: true,
-          Größe: 1, //in Liter
+          Größe: 1, 
           src: "https://www.worldofsweets.de/out/pictures/master/product/1/fuzetea-schwarzer-tee-pfirsich-400ml-no1-4837.jpg"
         }
       }
@@ -84,20 +84,28 @@ export default {
       if(result == "4059549000152"){ //Kreide 
         console.log("Scan war erfolgreich: " + result);
         this.visible=true;
-        document.getElementById("ButtonID").style.background='#008000'; // Buttonfarbe auf grün
+        document.getElementById("ButtonID").style.background='#008000'; 
+        this.localDataObject.name  = Datenbank[4059549000152].name;
+        this.localDataObject.preis = Datenbank[4059549000152].preis;
+        this.localDataObject.größe = Datenbank[4059549000152].größe;
       }  
 
       if(result == "123456789012"){ //Cola Light
         console.log("Scan war erfolgreich: " + result);
-        console.log(Datenbank[this.scannDataNumber].src);
         this.visible=true;
-        document.getElementById("ButtonID").style.background='#008000'; // Buttonfarbe auf grün
+        document.getElementById("ButtonID").style.background='#008000'; 
+        this.localDataObject.name  = Datenbank[123456789012].name;
+        this.localDataObject.preis = Datenbank[123456789012].preis;
+        this.localDataObject.größe = Datenbank[123456789012].größe;
       } 
      
-      if(result == "1234567890128"){ //Fuze Tee
+      if(result == "7085840170697"){ //Fuze Tee
         console.log("Scan war erfolgreich: " + result);
         this.visible=true;
-        document.getElementById("ButtonID").style.background='#008000'; // Buttonfarbe auf grün
+        document.getElementById("ButtonID").style.background='#008000'; 
+        this.localDataObject.name  = Datenbank[7085840170697].name;
+        this.localDataObject.preis = Datenbank[7085840170697].preis;
+        this.localDataObject.größe = Datenbank[7085840170697].größe;
       }
     }
   } 
