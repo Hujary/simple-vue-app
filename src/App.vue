@@ -1,10 +1,12 @@
 <template>
     <div> 
       <h1 style="text-align: center;"> Barcode App</h1>
+      <button @click=" this.getDataFromAxios()"> Sidebar </button>
+      <button @click=" this.saveData()"> Objekt Speichern </button>
       <StreamBarcodeReader @decode="onDecode" @loaded="onLoaded" id="readerID"></StreamBarcodeReader>
     </div>
     <div id="div2ID">
-      <button id="ButtonID" disabled="disabled"> Recognized </button>
+      <button id="ButtonID" > Recognized </button>
       <p id="ScannDataID" style="padding-left: 30px"> EAN: {{ this.scannDataNumber }}</p>
     </div>
     <div id="ProduktFensterID" v-if="visible"> 
@@ -22,7 +24,10 @@
 </template>
 
 <script>
+
 import { StreamBarcodeReader } from "vue-barcode-reader";
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -40,7 +45,7 @@ export default {
 
 //------------------------------------------------------------------------------------------------------------------------------------
 
-          //  "lokale" Datenbank  -->  hier wäre eigentlich eine API/Datenbank im einsatz 
+          //  "lokale Datenbank"  -->  für gespeicherte Produkte -> welche erkannt werden. 
        datenbank: [
         { "barcode": 123456789012,
 	        "name": "Cola Light",
@@ -72,22 +77,34 @@ export default {
   },
    methods: {
       //  On Decode -> sobald ein Code erkannt wurde.    (result = Nummer)
-    onDecode (result) { 
-      this.scannDataNumber = result;
+   async onDecode (result) { 
 
-          //  variablen resetten
+          //  variablen 
       this.visible = false;      
       this.prüfvariable = false;
+      this.scannDataNumber = result;
       
       for(let i=0; i<3; i++){                                               //   Anzahl-Elemente im Array
         console.log(i);
         if(this.scannDataNumber == this.datenbank[i].barcode){              //   prüft ob EAN in "Datenbank" liegt
+
+          //  Produkt speichern
+        await axios.post(`https://simple-vue-app-group-ezpz.azurewebsites.net/product`,  {
+                name: 'Testproduct',
+                price: '1.5',
+                ean: '123456789012',
+                src: "src"
+         })   
+        .then((response) => { 
+           console.log(response);
+        }) 
+      
           console.log("match mit:" + this.datenbank[i].barcode);
           document.getElementById("ButtonID").style.background='#008000';   //   Button wird grün bei match
           this.localDataObject.name  = this.datenbank[i].name;              //   Name  übergeben
           this.localDataObject.preis = this.datenbank[i].preis;             //   Preis übergeben
           this.localDataObject.größe = this.datenbank[i].größe;             //   Größe übergeben
-          this.localDataObject.src = this.datenbank[i].pictureLink;       //   SRC   übergeben
+          this.localDataObject.src = this.datenbank[i].pictureLink;         //   SRC   übergeben
           this.visible=true;
           this.prüfvariable = true;
         }
@@ -95,9 +112,32 @@ export default {
       if(prüfvariable == false) {
         document.getElementById("ButtonID").style.background='#f82c00';   // Button wird rot bei keinem match 
       } 
+    },
+
+
+        //   Daten von Datenbank auslesen und in response speichern
+    async getDataFromAxios(){
+      await axios.get(`https://simple-vue-app-group-ezpz.azurewebsites.net/product`)   
+        .then((response) => { 
+           console.log(response.data);
+        })
+    },
+      //   Daten in Datenbank speichern
+    async saveData() {
+      await axios.post(`https://simple-vue-app-group-ezpz.azurewebsites.net/product`,  {
+                name: 'Testproduct2',
+                price: '1.29',
+                size: '1',
+                ean: '123456789014',
+                src: 'src'
+      })   
+      .then((response) => { 
+         console.log(response.data);
+      })
+   }
     }
   } 
-}
+
 </script>
 
 <style >
