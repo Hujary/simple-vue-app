@@ -1,6 +1,6 @@
 <template>
   <div id="mainWindow">
-    <button class="SideBarButton" @click="toggle"> sidebar </button>
+    <button class="SideBarButton" @click="toggle" > side </button>
     <div id="SideBar">
       <SideBar v-if="isSideBarActive"/>
     </div>
@@ -21,8 +21,8 @@
         <div> 
           <ul style="padding-top: 35px">
             <li> {{ this.localDataObject.name }} </li> 
-            <li> {{ this.localDataObject.preis + " €"}} </li> 
-            <li> {{ this.localDataObject.größe + " Liter"}} </li>
+            <li> {{ this.localDataObject.price + " €"}} </li> 
+            <li> {{ this.localDataObject.size + " Liter"}} </li>
           </ul>
         </div>
       </div>
@@ -47,7 +47,7 @@ export default {
         //  lokales Datenobjekt für Produktausgabe  ->  bei Start "leer"
       localDataObject: {
         name: null,
-        preis: null, 
+        price: null, 
         size: null,    
         src: null,
       },
@@ -58,21 +58,21 @@ export default {
        datenbank: [
         { "ean": 123456789012,
 	        "name": "Cola Light",
-	        "preis": 1.29,
+	        "price": 1.29,
           "size": 1,
-	        "src": "https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/61MypS1KawL._AC_SS450_.jpg"
+	        "src": "https://rexroth-liefert.de/media/9b/17/be/1638257642/6527397_SHOP_CCL_1L_PET_FR_GER_D_CON_EAN5449000017895_R1.png"
 	      },
 	       
         { "ean": 7290011018184,
-	        "name": "Fuze Tee",
-	        "preis": 1.19,
+	        "name": "Fuze_Tee",
+	        "price": 1.19,
           "size": 1,
 	        "src": "https://www.worldofsweets.de/out/pictures/master/product/1/fuzetea-schwarzer-tee-pfirsich-400ml-no1-4837.jpg"
 	      },
         { "ean": 1231231231232,
 	        "name": "Fanta",
-	        "preis": 1.49,
-          "size": 1.5,
+	        "price": 1.49,
+          "size": 1,
 	        "src": "https://cdn02.plentymarkets.com/q7p0kwea05gv/item/images/4287/full/35572c.jpg"
 	      }
       ],
@@ -86,7 +86,6 @@ export default {
     SideBar
   },
    methods: {
-
       //  On Decode -> sobald ein Code erkannt wurde.    (result = Nummer)
    async onDecode (result) { 
 
@@ -94,14 +93,14 @@ export default {
       this.visible = false;      
       this.prüfvariable = false;
       this.scannDataNumber = result;
-      console.log("produkt erkannt");
+      console.log("ean wurde erfasst");
       
       for(let i=0; i<3; i++){                                               //   Anzahl-Elemente im Array
         if(this.scannDataNumber == this.datenbank[i].ean){                  //   prüft ob EAN in "Datenbank" liegt
           console.log("match mit:" + this.datenbank[i].ean);
           document.getElementById("ButtonID").style.background='#008000';   //   Button wird grün bei match
           this.localDataObject.name  = this.datenbank[i].name;              //   Name  übergeben
-          this.localDataObject.preis = this.datenbank[i].preis;             //   Preis übergeben
+          this.localDataObject.price = this.datenbank[i].price;             //   Preis übergeben
           this.localDataObject.size = this.datenbank[i].size;               //   Größe übergeben
           this.localDataObject.src = this.datenbank[i].src;                 //   SRC   übergeben
           this.visible=true;
@@ -110,7 +109,7 @@ export default {
             //  Produkt speichern
         await axios.post(`https://simple-vue-app-group-ezpz.azurewebsites.net/product`,  {
                 name: this.datenbank[i].name,
-                price: this.datenbank[i].preis,
+                price: this.datenbank[i].price,
                 size: this.datenbank[i].size,
                 ean: this.datenbank[i].ean,
                 src: this.datenbank[i].src,
@@ -135,6 +134,7 @@ export default {
     },
 
     toggle() {
+      this.getDataFromAxios; //Daten von API Datenbank auslesen
       this.isSideBarActive = !this.isSideBarActive;
       this.hidden = !this.hidden
     }
