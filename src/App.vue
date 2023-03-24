@@ -1,4 +1,13 @@
 <template>
+  <div id="mainWindow">
+    <button class="SideBarButton" @click="toggle"> Click </button>
+    <div id="SideBar">
+      
+      <SideBar v-if="isSideBarActive"/>
+    </div>
+
+    
+  <div id="Scanner" v-if="hidden">
     <div> 
       <h1 style="text-align: center;"> Barcode App</h1>
       <StreamBarcodeReader @decode="onDecode" @loaded="onLoaded" id="readerID"></StreamBarcodeReader>
@@ -7,6 +16,7 @@
       <button id="ButtonID" disabled="disabled"> Recognized </button>
       <p id="ScannDataID" style="padding-left: 30px"> EAN: {{ this.scannDataNumber }}</p>
     </div>
+    
     <div id="ProduktFensterID" v-if="visible"> 
       <div > 
         <img id="ProductPictureID" :src=this.localDataObject.src />  <!-- Funktioniert nicht !!?-->
@@ -19,15 +29,23 @@
         </ul>
       </div>
     </div>
+    
+  </div>
+  
+  </div>
+    
 </template>
 
 <script>
 import { StreamBarcodeReader } from "vue-barcode-reader";
+import SideBar from "./SideBar.vue";
 export default {
   data() {
     return {
       scannDataNumber: "barcode",
       visible: false,
+      isSideBarActive: false,
+      hidden: true,
 
         //  lokales Datenobjekt für Produktausgabe  ->  bei Start "leer"
       localDataObject: {
@@ -67,7 +85,8 @@ export default {
     }
   },
   components: {
-    StreamBarcodeReader
+    StreamBarcodeReader,
+    SideBar
   },
    methods: {
       //  On Decode -> sobald ein Code erkannt wurde.    (result = Nummer)
@@ -92,12 +111,26 @@ export default {
       if(prüfvariable == false) {
         document.getElementById("ButtonID").style.background='#f82c00';   // Button wird rot bei keinem match 
       } 
+    },
+
+    toggle() {
+      this.isSideBarActive = !this.isSideBarActive;
+      this.hidden = !this.hidden
     }
   } 
 }
 </script>
 
 <style >
+
+  #mainWindow{
+    display: flex;
+    flex-direction: column;
+  }
+
+  #Scanner{
+    
+  }
 
   #ProductPictureID {
     width: 150px;
@@ -116,5 +149,10 @@ export default {
     display: flex;
     flex-direction: row;
     padding-top: 20px;
+  }
+
+  .SideBarButton{
+    height: 20px;
+    width: 50px;
   }
 </style>
