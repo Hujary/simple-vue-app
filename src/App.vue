@@ -39,7 +39,7 @@ export default {
       localDataObject: {
         name: null,
         preis: null, 
-        größe: null,    
+        size: null,    
         src: null,
       },
 
@@ -47,24 +47,24 @@ export default {
 
           //  "lokale Datenbank"  -->  für gespeicherte Produkte -> welche erkannt werden. 
        datenbank: [
-        { "barcode": 123456789012,
+        { "ean": 123456789012,
 	        "name": "Cola Light",
 	        "preis": 1.29,
-          "größe": 1,
-	        "pictureLink": "https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/61MypS1KawL._AC_SS450_.jpg"
+          "size": 1,
+	        "src": "https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/61MypS1KawL._AC_SS450_.jpg"
 	      },
 	       
-        { "barcode": 7290011018184,
+        { "ean": 7290011018184,
 	        "name": "Fuze Tee",
 	        "preis": 1.19,
-          "größe": 1,
-	        "pictureLink": "https://www.worldofsweets.de/out/pictures/master/product/1/fuzetea-schwarzer-tee-pfirsich-400ml-no1-4837.jpg"
+          "size": 1,
+	        "src": "https://www.worldofsweets.de/out/pictures/master/product/1/fuzetea-schwarzer-tee-pfirsich-400ml-no1-4837.jpg"
 	      },
-        { "barcode": 1231231231232,
+        { "ean": 1231231231232,
 	        "name": "Fanta",
 	        "preis": 1.49,
-          "größe": 1.5,
-	        "pictureLink": "https://cdn02.plentymarkets.com/q7p0kwea05gv/item/images/4287/full/35572c.jpg"
+          "size": 1.5,
+	        "src": "https://cdn02.plentymarkets.com/q7p0kwea05gv/item/images/4287/full/35572c.jpg"
 	      }
       ],
 
@@ -90,12 +90,14 @@ export default {
 
           //  Produkt speichern
         await axios.post(`https://simple-vue-app-group-ezpz.azurewebsites.net/product`,  {
-                name: 'Testproduct',
-                price: '1.5',
-                ean: '123456789012',
-                src: "src"
+                name: this.datenbank[i].name,
+                price: this.datenbank[i].preis,
+                size: this.datenbank[i].size,
+                ean: this.datenbank[i].ean,
+                src: this.datenbank[i].src,
          })   
         .then((response) => { 
+          console.log("wird ausgeführt");
            console.log(response);
         }) 
       
@@ -103,13 +105,13 @@ export default {
           document.getElementById("ButtonID").style.background='#008000';   //   Button wird grün bei match
           this.localDataObject.name  = this.datenbank[i].name;              //   Name  übergeben
           this.localDataObject.preis = this.datenbank[i].preis;             //   Preis übergeben
-          this.localDataObject.größe = this.datenbank[i].größe;             //   Größe übergeben
-          this.localDataObject.src = this.datenbank[i].pictureLink;         //   SRC   übergeben
+          this.localDataObject.size = this.datenbank[i].size;             //   Größe übergeben
+          this.localDataObject.src = this.datenbank[i].src;         //   SRC   übergeben
           this.visible=true;
           this.prüfvariable = true;
         }
       } 
-      if(prüfvariable == false) {
+      if(this.prüfvariable == false) {
         document.getElementById("ButtonID").style.background='#f82c00';   // Button wird rot bei keinem match 
       } 
     },
@@ -125,11 +127,11 @@ export default {
       //   Daten in Datenbank speichern
     async saveData() {
       await axios.post(`https://simple-vue-app-group-ezpz.azurewebsites.net/product`,  {
-                name: 'Testproduct2',
-                price: '1.29',
-                size: '1',
-                ean: '123456789014',
-                src: 'src'
+                name: this.datenbank[0].name,
+                price: this.datenbank[0].preis,
+                size: this.datenbank[0].size,
+                ean: this.datenbank[0].ean,
+                src: this.datenbank[0].src,
       })   
       .then((response) => { 
          console.log(response.data);
