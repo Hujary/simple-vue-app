@@ -116,6 +116,7 @@ export default {
   }
   #div2ID {
     display: flex;
-    flex-direction: row
+    flex-direction: row;
+    padding-top: 20px;
   }
 </style>
