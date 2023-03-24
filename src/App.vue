@@ -28,6 +28,7 @@ export default {
     return {
       scannDataNumber: "barcode",
       visible: false,
+      prüfvariable: false,
 
         //  lokales Datenobjekt für Produktausgabe  ->  bei Start "leer"
       localDataObject: {
@@ -55,9 +56,9 @@ export default {
 	        "pictureLink": "https://www.worldofsweets.de/out/pictures/master/product/1/fuzetea-schwarzer-tee-pfirsich-400ml-no1-4837.jpg"
 	      },
         { "barcode": 1231231231232,
-	        "name": "test",
-	        "preis": 1.19,
-          "größe": 2,
+	        "name": "Fanta",
+	        "preis": 1.49,
+          "größe": 1.5,
 	        "pictureLink": "https://www.worldofsweets.de/out/pictures/master/product/1/fuzetea-schwarzer-tee-pfirsich-400ml-no1-4837.jpg"
 	      }
       ],
@@ -76,7 +77,7 @@ export default {
 
           //  variablen resetten
       this.visible = false;      
-      let prüfvariable = false; 
+      this.prüfvariable = false;
       
       for(let i=0; i<3; i++){                                               //   Anzahl-Elemente im Array
         console.log(i);
