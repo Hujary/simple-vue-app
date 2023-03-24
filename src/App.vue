@@ -1,30 +1,41 @@
 <template>
-    <div> 
-      <h1 style="text-align: center;"> Barcode App</h1>
-      <button @click=" this.getDataFromAxios()"> Sidebar </button>
-      <button @click=" this.saveData()"> Objekt Speichern </button>
-      <StreamBarcodeReader @decode="onDecode" @loaded="onLoaded" id="readerID"></StreamBarcodeReader>
+  <div id="mainWindow">
+    <button class="SideBarButton" @click="toggle"> Click </button>
+    <div id="SideBar">
+      <SideBar v-if="isSideBarActive"/>
     </div>
-    <div id="div2ID">
-      <button id="ButtonID" > Recognized </button>
-      <p id="ScannDataID" style="padding-left: 30px"> EAN: {{ this.scannDataNumber }}</p>
-    </div>
-    <div id="ProduktFensterID" v-if="visible"> 
-      <div > 
-        <img id="ProductPictureID" :src="this.localDataObject.src" />  <!-- Funktioniert nicht !!?-->
-      </div>
+
+    <div id="Scanner" v-if="hidden">
       <div> 
-        <ul style="padding-top: 35px">
-          <li> {{ this.localDataObject.name }} </li> 
-          <li> {{ this.localDataObject.preis + " €"}} </li> 
-          <li> {{ this.localDataObject.größe + " Liter"}} </li>
-        </ul>
+        <h1 style="text-align: center;"> Barcode App</h1>
+        <button @click=" this.getDataFromAxios()"> Sidebar </button>
+        <button @click=" this.saveData()"> Objekt Speichern </button>
+        <StreamBarcodeReader @decode="onDecode" @loaded="onLoaded" id="readerID"></StreamBarcodeReader>
+      </div>
+      <div id="div2ID">
+        <button id="ButtonID" > Recognized </button>
+        <p id="ScannDataID" style="padding-left: 30px"> EAN: {{ this.scannDataNumber }}</p>
+      </div>
+      <div id="ProduktFensterID" v-if="visible"> 
+        <div > 
+          <img id="ProductPictureID" :src="this.localDataObject.src" />  <!-- Funktioniert nicht !!?-->
+        </div>
+        <div> 
+          <ul style="padding-top: 35px">
+            <li> {{ this.localDataObject.name }} </li> 
+            <li> {{ this.localDataObject.preis + " €"}} </li> 
+            <li> {{ this.localDataObject.größe + " Liter"}} </li>
+          </ul>
+        </div>
       </div>
     </div>
+  </div>  
+  
+  
 </template>
 
 <script>
-
+import SideBar from "./SideBar.vue";
 import { StreamBarcodeReader } from "vue-barcode-reader";
 import axios from 'axios';
 
@@ -33,6 +44,8 @@ export default {
     return {
       scannDataNumber: "barcode",
       visible: false,
+      isSideBarActive: false,
+      hidden: true,
       prüfvariable: false,
 
         //  lokales Datenobjekt für Produktausgabe  ->  bei Start "leer"
@@ -73,7 +86,8 @@ export default {
     }
   },
   components: {
-    StreamBarcodeReader
+    StreamBarcodeReader,
+    SideBar
   },
    methods: {
       //  On Decode -> sobald ein Code erkannt wurde.    (result = Nummer)
@@ -136,13 +150,26 @@ export default {
       .then((response) => { 
          console.log(response.data);
       })
-   }
+   },
+
+   toggle() {
+      this.isSideBarActive = !this.isSideBarActive;
+      this.hidden = !this.hidden
+    }
+
     }
   } 
 
 </script>
 
 <style >
+
+#mainWindow{
+  display: flex;
+  flex-direction: column;
+}
+
+
   #readerID {
     background: brown;
   }
@@ -163,4 +190,10 @@ export default {
     display: flex;
     flex-direction: row
   }
+
+  .SideBarButton{
+    height: 20px;
+    width: 50px;
+  }
+
 </style>
