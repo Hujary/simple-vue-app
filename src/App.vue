@@ -1,15 +1,13 @@
 <template>
   <div id="mainWindow">
-    <button class="SideBarButton" @click="toggle"> Click </button>
+    <button class="SideBarButton" @click="toggle"> sidebar </button>
     <div id="SideBar">
       <SideBar v-if="isSideBarActive"/>
     </div>
 
     <div id="Scanner" v-if="hidden">
       <div> 
-        <h1 style="text-align: center;"> Barcode App</h1>
-        <button @click=" this.getDataFromAxios()"> Sidebar </button>
-        <button @click=" this.saveData()"> Objekt Speichern </button>
+        <h1 style="text-align: center;"> Barcode App </h1>
         <StreamBarcodeReader @decode="onDecode" @loaded="onLoaded" id="readerID"></StreamBarcodeReader>
       </div>
       <div id="div2ID">
@@ -30,8 +28,6 @@
       </div>
     </div>
   </div>  
-  
-  
 </template>
 
 <script>
@@ -90,6 +86,7 @@ export default {
     SideBar
   },
    methods: {
+
       //  On Decode -> sobald ein Code erkannt wurde.    (result = Nummer)
    async onDecode (result) { 
 
@@ -97,12 +94,20 @@ export default {
       this.visible = false;      
       this.prüfvariable = false;
       this.scannDataNumber = result;
+      console.log("produkt erkannt");
       
       for(let i=0; i<3; i++){                                               //   Anzahl-Elemente im Array
-        console.log(i);
-        if(this.scannDataNumber == this.datenbank[i].barcode){              //   prüft ob EAN in "Datenbank" liegt
+        if(this.scannDataNumber == this.datenbank[i].ean){                  //   prüft ob EAN in "Datenbank" liegt
+          console.log("match mit:" + this.datenbank[i].ean);
+          document.getElementById("ButtonID").style.background='#008000';   //   Button wird grün bei match
+          this.localDataObject.name  = this.datenbank[i].name;              //   Name  übergeben
+          this.localDataObject.preis = this.datenbank[i].preis;             //   Preis übergeben
+          this.localDataObject.size = this.datenbank[i].size;               //   Größe übergeben
+          this.localDataObject.src = this.datenbank[i].src;                 //   SRC   übergeben
+          this.visible=true;
+          this.prüfvariable = true;
 
-          //  Produkt speichern
+            //  Produkt speichern
         await axios.post(`https://simple-vue-app-group-ezpz.azurewebsites.net/product`,  {
                 name: this.datenbank[i].name,
                 price: this.datenbank[i].preis,
@@ -111,18 +116,8 @@ export default {
                 src: this.datenbank[i].src,
          })   
         .then((response) => { 
-          console.log("wird ausgeführt");
-           console.log(response);
-        }) 
-      
-          console.log("match mit:" + this.datenbank[i].barcode);
-          document.getElementById("ButtonID").style.background='#008000';   //   Button wird grün bei match
-          this.localDataObject.name  = this.datenbank[i].name;              //   Name  übergeben
-          this.localDataObject.preis = this.datenbank[i].preis;             //   Preis übergeben
-          this.localDataObject.size = this.datenbank[i].size;             //   Größe übergeben
-          this.localDataObject.src = this.datenbank[i].src;         //   SRC   übergeben
-          this.visible=true;
-          this.prüfvariable = true;
+           console.log(response.data);
+        })
         }
       } 
       if(this.prüfvariable == false) {
@@ -138,32 +133,16 @@ export default {
            console.log(response.data);
         })
     },
-      //   Daten in Datenbank speichern
-    async saveData() {
-      await axios.post(`https://simple-vue-app-group-ezpz.azurewebsites.net/product`,  {
-                name: this.datenbank[0].name,
-                price: this.datenbank[0].preis,
-                size: this.datenbank[0].size,
-                ean: this.datenbank[0].ean,
-                src: this.datenbank[0].src,
-      })   
-      .then((response) => { 
-         console.log(response.data);
-      })
-   },
 
-   toggle() {
+    toggle() {
       this.isSideBarActive = !this.isSideBarActive;
       this.hidden = !this.hidden
     }
-
     }
   } 
-
 </script>
 
 <style >
-
 #mainWindow{
   display: flex;
   flex-direction: column;
