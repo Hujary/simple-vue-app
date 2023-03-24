@@ -87,7 +87,7 @@ export default {
           this.localDataObject.name  = this.datenbank[i].name;              //   Name  übergeben
           this.localDataObject.preis = this.datenbank[i].preis;             //   Preis übergeben
           this.localDataObject.größe = this.datenbank[i].größe;             //   Größe übergeben
-          this.localDataObject.barcode   = this.datenbank[i].barcode;       //   SRC   übergeben
+          this.localDataObject.src = this.datenbank[i].pictureLink;       //   SRC   übergeben
           this.visible=true;
           this.prüfvariable = true;
         }
