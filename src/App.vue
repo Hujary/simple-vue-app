@@ -98,9 +98,7 @@ export default {
 </script>
 
 <style >
-  #readerID {
-    background: brown;
-  }
+
   #ProductPictureID {
     width: 150px;
     height: 150px;
