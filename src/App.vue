@@ -72,9 +72,11 @@ export default {
    methods: {
       //  On Decode -> sobald ein Code erkannt wurde.    (result = Nummer)
     onDecode (result) { 
-      this.scannDataNumber = result; 
-      this.visible = false;
-      let prüfvariable;
+      this.scannDataNumber = result;
+
+          //  variablen resetten
+      this.visible = false;      
+      let prüfvariable = false; 
       
       for(let i=0; i<3; i++){                                               //   Anzahl-Elemente im Array
         console.log(i);
