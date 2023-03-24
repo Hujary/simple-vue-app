@@ -59,7 +59,7 @@ export default {
 	        "name": "Fanta",
 	        "preis": 1.49,
           "größe": 1.5,
-	        "pictureLink": "https://www.worldofsweets.de/out/pictures/master/product/1/fuzetea-schwarzer-tee-pfirsich-400ml-no1-4837.jpg"
+	        "pictureLink": "https://cdn02.plentymarkets.com/q7p0kwea05gv/item/images/4287/full/35572c.jpg"
 	      }
       ],
 
@@ -87,7 +87,7 @@ export default {
           this.localDataObject.name  = this.datenbank[i].name;              //   Name  übergeben
           this.localDataObject.preis = this.datenbank[i].preis;             //   Preis übergeben
           this.localDataObject.größe = this.datenbank[i].größe;             //   Größe übergeben
-          this.localDataObject.barcode   = this.datenbank[i].barcode;       //   SRC   übergeben
+          this.localDataObject.src = this.datenbank[i].pictureLink;       //   SRC   übergeben
           this.visible=true;
           this.prüfvariable = true;
         }
