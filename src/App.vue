@@ -9,7 +9,7 @@
     </div>
     <div id="ProduktFensterID" v-if="visible"> 
       <div > 
-        <img id="ProductPictureID" :src=this.localDataObject.src />  <!-- Funktioniert nicht !!?-->
+        <img id="ProductPictureID" :src="this.localDataObject.src" />  <!-- Funktioniert nicht !!?-->
       </div>
       <div> 
         <ul style="padding-top: 35px">
